@@ -5,12 +5,11 @@ public class Permutation
 {
 	public final static boolean printWorkSheet = true;
     
-    /** Chiffrement par permutation : on prend un texte, le normalise (retrait d'espace/caractères non gérés, mise en majuscule de toutes les lettres) 
-     *                                puis on le découpe en ligne de la longueur de la clé, qui forment ensuite un rectangle, chaque ligne étant superposé l'une
-     *                                sur l'autre.
-     *                                on créer en suite le message chiffré en lisant le rectangle par colonne, dans l'ordre indiqué par la clé.
-     *                                La clé étant ici un mot, on en extrait un ordre en suivant l'ordre alphabétique des lettres du mots.
-     *                                */
+    /** Chiffrement par permutation : 
+     * on prend un texte, le normalise (retrait d'espace/caractères non gérés, mise en majuscule de toutes les lettres) 
+     * puis on le découpe en ligne de la longueur de la clé, qui forment ensuite un rectangle, chaque ligne étant superposé l'une sur l'autre.
+     * On créer en suite le message chiffré en lisant le rectangle par colonne, dans l'ordre indiqué par la clé.
+     * La clé étant ici un mot, on en extrait un ordre en suivant l'ordre alphabétique des lettres du mots.                               */
 	public static String chiffrer(String cle, String chaine)
 	{
         List<String> workSheet = new ArrayList<String>();
@@ -23,7 +22,7 @@ public class Permutation
         StringBuffer key = new StringBuffer(cle);
         
         for(int j = 0; j < key.length(); j++) {
-        	// index de la première lettre de key 
+        	// index de la jème lettre de key 
         	Integer index = 1;
         	char c  = key.charAt(j);
         	for(int i = 0; i < key.length(); i++) {
@@ -32,6 +31,7 @@ public class Permutation
         			index++;
         		}
         	}
+            // si l'index est déjà pris (lettre déjà présente), on incrémente l'index
         	while(keyInt.contains(index)) {
         		index++;
         	}
