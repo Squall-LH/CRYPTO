@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Permutation
 {
 	public final static boolean printWorkSheet = true;
+    
+    /** Chiffrement par permutation : on prend un texte, le normalise (retrait d'espace/caractères non gérés, mise en majuscule de toutes les lettres) 
+     *                                puis on le découpe en ligne de la longueur de la clé, qui forment ensuite un rectangle, chaque ligne étant superposé l'une
+     *                                sur l'autre.
+     *                                on créer en suite le message chiffré en lisant le rectangle par colonne, dans l'ordre indiqué par la clé.
+     *                                La clé étant ici un mot, on en extrait un ordre en suivant l'ordre alphabétique des lettres du mots.
+     *                                */
 	public static String chiffrer(String cle, String chaine)
 	{
         List<String> workSheet = new ArrayList<String>();
