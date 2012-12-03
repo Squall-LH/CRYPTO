@@ -1,5 +1,3 @@
-// Question 7 -> Quelles diff par rapport à question 3 ??
-
 public class Vigenere {
 	
 	public static char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -97,4 +95,18 @@ public class Vigenere {
 		//System.out.println("deciphered by Vigenere : " + cyphered);
 		return cyphered.toString();
 	}
+
+	public static String generate(int size) {
+		char[] key = new char[size];
+		Random r = new Random();
+
+		for (int i = 0; i < size; i++) {
+			int rand = r.nextInt(alphabet.length);
+			key[i] = alphabet[rand];
+		}
+
+		System.out.println(key);
+		return String.copyValueOf(key);
+	}
+
 }
