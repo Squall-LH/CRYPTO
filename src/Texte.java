@@ -21,8 +21,10 @@ public class Texte
             }
         } catch (Exception e)
         {
-            contenu = "texte de remplacement (erreur lors de l'ouverture du fichier)";
+            contenu = "TEXTE DE REMPLACEMENT (ERREUR LORS DE L'OUVERTURE DU FICHIER)";
         }
+        
+        contenu = contenu.toUpperCase();
     }
 
    public Map<String,Double> frequences()
@@ -42,12 +44,12 @@ public class Texte
            tmpBigramme = c1+c2;
            tmpTrigramme = c0+c1+c2;
            
-           if (c2.matches("[a-z|A-Z]"))
+           if (c2.matches("[A-Z]"))
                list.put(c2,0.0);
 
-           if (tmpBigramme.matches("[a-z|A-Z]+") && tmpBigramme.length() == 2)
+           if (tmpBigramme.matches("[A-Z]+") && tmpBigramme.length() == 2)
                list.put(tmpBigramme,0.0);
-           if (tmpTrigramme.matches("[a-z|A-Z]+") && tmpTrigramme.length() == 3)
+           if (tmpTrigramme.matches("[A-Z]+") && tmpTrigramme.length() == 3)
                list.put(tmpTrigramme,0.0);
        }
        
@@ -70,7 +72,7 @@ public class Texte
               } else
                   search = false;
            }
-           double frequence = (double) count/(contenu.length()-1);
+           double frequence = (double) count/((contenu.length()-1)/entry.getKey().length());
            list.put(entry.getKey(),frequence);
        }
 
