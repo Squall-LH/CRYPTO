@@ -92,15 +92,19 @@ public class Vigenere {
 			}
 		}
 
-        Texte t("texte_cours.txt");
+        Texte t = new Texte("texte_cours.txt");
         HashMap<String,Double> freq = t.frequences();
-         
+        
+        double indice_co = 0.0; 
         for(int i = 0; i < alphabet.length(); i++) {
            double f = t.get(String.valueOf(alphabet[i])); 
            f *= f;
-           
+           int message_length = message.length();
+           indice_co += (f ∕ message_length);  
         }
 		
+
+		System.out.println("indice_co : " + indice_co);
 		System.out.println("extract : " + extract);
 		
 		//System.out.println("deciphered by Vigenere : " + cyphered);
