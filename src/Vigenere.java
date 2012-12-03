@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Vigenere {
 	
 	public static char[] alphabet = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
@@ -89,6 +91,15 @@ public class Vigenere {
 				extract.append(message.charAt(k));
 			}
 		}
+
+        Texte t("texte_cours.txt");
+        HashMap<String,Double> freq = t.frequences();
+         
+        for(int i = 0; i < alphabet.length(); i++) {
+           double f = t.get(String.valueOf(alphabet[i])); 
+           f *= f;
+           
+        }
 		
 		System.out.println("extract : " + extract);
 		
