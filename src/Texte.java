@@ -25,7 +25,7 @@ public class Texte
         }
     }
 
-   public Map frequences()
+   public Map<String,Double> frequences()
    {
        Map<String,Double> list = new HashMap<String,Double>();
        
