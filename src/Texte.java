@@ -2,11 +2,11 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
-import java.util.Collection;
 
 public class Texte
 {
     private String contenu = "";
+    private double freqMin = 0.005;
     
     public Texte(String titreFichier)
     {
@@ -16,11 +16,9 @@ public class Texte
             int line = fichier.read();
             while (line != -1)
             {
-                System.out.print((char) line);
                 contenu += (char) line;
                 line = fichier.read();
             }
-            System.out.println("");
         } catch (Exception e)
         {
             contenu = "texte de remplacement (erreur lors de l'ouverture du fichier)";
@@ -31,29 +29,31 @@ public class Texte
    {
        Map<String,Double> list = new HashMap<String,Double>();
        
-       String[] min = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","u","v","w","x","y","z"};
-       String[] maj = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","U","V","W","X","Y","Z"};
-       String[] bigramme = {"le","Le","La","je","ab","cd","de"};
-       String[] trigramme = {"les","Bob","oui","non","des"};
-       for (int i = 0; i < min.length; i++)
+       String c0 = "";
+       String c1 = "";
+       String c2 = "";
+       String tmpBigramme = "";
+       String tmpTrigramme = "";
+       for (int i = 0; i < contenu.length(); i++)
        {
-           list.put(min[i],0.0);
-       }
-       for (int i = 0; i < maj.length; i++)
-       {
-           list.put(maj[i],0.0);
-       }
-       for (int i = 0; i < bigramme.length; i++)
-       {
-           list.put(bigramme[i],0.0);
-       }
-       for (int i = 0; i < trigramme.length; i++)
-       {
-           list.put(trigramme[i],0.0);
-       }
+           c0 = c1;
+           c1 = c2;
+           c2 = contenu.charAt(i)+"";
+           tmpBigramme = c1+c2;
+           tmpTrigramme = c0+c1+c2;
+           
+           if (c2.matches("[a-z|A-Z]"))
+               list.put(c2,0.0);
 
+           if (tmpBigramme.matches("[a-z|A-Z]+") && tmpBigramme.length() == 2)
+               list.put(tmpBigramme,0.0);
+           if (tmpTrigramme.matches("[a-z|A-Z]+") && tmpTrigramme.length() == 3)
+               list.put(tmpTrigramme,0.0);
+       }
+       
        boolean search;
        int debut;
+
        int count;
        for (Map.Entry<String,Double> entry : list.entrySet())
        {
@@ -70,10 +70,18 @@ public class Texte
               } else
                   search = false;
            }
-           double frequence = (double) count/contenu.length();
+           double frequence = (double) count/(contenu.length()-1);
            list.put(entry.getKey(),frequence);
        }
 
-       return list;
+       Map<String,Double> finalList = new HashMap<String,Double>();
+       
+       for (Map.Entry<String,Double> entry : list.entrySet())
+       {
+           if (entry.getValue() > freqMin)
+               finalList.put(entry.getKey(),entry.getValue());
+       }
+
+       return finalList;
    }
 }
