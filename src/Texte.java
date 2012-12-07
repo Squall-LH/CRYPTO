@@ -6,7 +6,8 @@ import java.io.FileInputStream;
 public class Texte
 {
     private String contenu = "";
-    private double freqMin = 0.005;
+//    private double freqMin = 0.005;
+    private static double freqMin = 0.0;
     
     public Texte(String titreFichier)
     {
@@ -16,6 +17,7 @@ public class Texte
             int line = fichier.read();
             while (line != -1)
             {
+				System.out.print((char) line);
                 contenu += (char) line;
                 line = fichier.read();
             }
@@ -80,7 +82,52 @@ public class Texte
        
        for (Map.Entry<String,Double> entry : list.entrySet())
        {
-           if (entry.getValue() > freqMin)
+           if (entry.getValue() >= freqMin)
+               finalList.put(entry.getKey(),entry.getValue());
+       }
+
+       return finalList;
+   }
+   
+   public static Map<String,Double> frequences(String contenu)
+   {
+		Map<String,Double> list = new HashMap<String,Double>();
+       
+       for (int i = 0; i < contenu.length(); i++)
+       {
+           String c = contenu.charAt(i)+"";
+           if (c.matches("[A-Z]"))
+               list.put(c,0.0);
+       }
+       
+       boolean search;
+       int debut;
+
+       int count;
+       for (Map.Entry<String,Double> entry : list.entrySet())
+       {
+           search = true;
+           debut = 0;
+           count = 0;
+           while(search)
+           {
+               int index = contenu.indexOf(entry.getKey(),debut);
+              if (index >= 0)
+              {
+                  debut = index+1; 
+                  count++;
+              } else
+                  search = false;
+           }
+           double frequence = (double) count/((contenu.length()-1)/entry.getKey().length());
+           list.put(entry.getKey(),frequence);
+       }
+
+       Map<String,Double> finalList = new HashMap<String,Double>();
+       
+       for (Map.Entry<String,Double> entry : list.entrySet())
+       {
+           if (entry.getValue() >= freqMin)
                finalList.put(entry.getKey(),entry.getValue());
        }
 

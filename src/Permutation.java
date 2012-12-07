@@ -1,4 +1,7 @@
 import java.util.Random;
+import java.util.Map;
+import java.lang.Math;
+import java.util.HashMap;
 
 public class Permutation {
 	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -6,12 +9,15 @@ public class Permutation {
 	public static void main(String[] args) {
 		String key = generate(alphabet);
 		System.out.println("key: " + key);
-		String message = "FUuU";
+		//String message = "I WOULD WALK FIVE HUNDRED MILES AND I WOULD WALK FIVE HUNDRED MORE";
+		String message = "IWOULDWALKFIVEHUNDREDMILESANDIWOULDWALKFIVEHUNDREDMORE";
 		System.out.println("message: " + message);
 		String cyphered = cypher(message, key, false);
 		System.out.println("cyphered: " + cyphered);
 		String clear = decipher(cyphered, key);
 		System.out.println("clear: " + clear);
+		String cracked = crack(cyphered);
+		System.out.println("cracked: "+cracked);
 	}
 
 	public static String generate(String alphabet) {
@@ -25,7 +31,6 @@ public class Permutation {
 			key[rand] = tmp;
 		}
 
-		System.out.println(key);
 		return String.copyValueOf(key);
 	}
 
@@ -55,14 +60,53 @@ public class Permutation {
 
 		return cyphered.toString();
 	}
-/*
-	public static String dechiffrer(int cle, String chaine) {
-		String msg = "";
-		for (int i = 0; i < chaine.length(); i++) {
-			int ascii = ((int) chaine.charAt(i));
-			msg += ((char) (ascii - cle));
+
+	public static String crack(String message) {
+		//lettres restantes	
+		String restant = message;
+		//frequences dans le MESSAGE
+		Map<String,Double> freqMsg = Texte.frequences(message);
+		//frequences dans le CORPUS
+      Texte t = new Texte("texte.txt");
+      Map<String,Double> freqCorpus = t.frequences();
+		//tant qu'il reste des lettres
+		while (restant.length() > 0)
+		{
+			double freqTmp = 0.0;
+			String charTmp = "";
+			if (freqMsg.get(restant.charAt(0)+"") != null)
+			{
+				for (Map.Entry<String,Double> entry : freqCorpus.entrySet())
+				{
+					if (entry.getKey().length() == 1)
+					{
+						if (Double.compare(freqTmp,0) == 0)
+						{
+							charTmp = entry.getKey();
+							freqTmp = entry.getValue();
+						} else if (Double.compare(Math.abs(freqMsg.get(restant.charAt(0)+"") - entry.getValue()),Math.abs(freqMsg.get(restant.charAt(0)+"") - freqTmp)) < 0)
+						{
+							freqTmp = entry.getValue();
+							charTmp = entry.getKey();
+						}
+					}
+				}
+			}
+			
+			message = Permutation.replace(message,restant.charAt(0)+"",charTmp);
+			restant = restant.substring(1);
 		}
-		return msg;
+		return message;
 	}
-	*/
+	
+	public static String replace(String message, String from, String to)
+	{
+		String new_string = "";
+		int index = message.indexOf(from);
+		for (int i = 0; i < message.length(); i++)
+		{
+			new_string += (i == index) ? to : message.charAt(i)+"";
+		}
+		return new_string;
+	}
 }
