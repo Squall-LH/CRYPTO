@@ -13,24 +13,24 @@ public class Texte
     {
         try
         {
+	        	System.out.println("Lecture du fichier "+titreFichier);
             InputStreamReader fichier = new InputStreamReader(new FileInputStream(titreFichier)); 
             int line = fichier.read();
             while (line != -1)
             {
-				System.out.print((char) line);
-                contenu += (char) line;
-                line = fichier.read();
+          	  contenu += (char) line;
+           	  line = fichier.read();
             }
         } catch (Exception e)
         {
             contenu = "TEXTE DE REMPLACEMENT (ERREUR LORS DE L'OUVERTURE DU FICHIER)";
         }
-        
         contenu = contenu.toUpperCase();
     }
 
    public Map<String,Double> frequences()
    {
+   	System.out.println("Génération des fréquences du corpus");
        Map<String,Double> list = new HashMap<String,Double>();
        
        String c0 = "";
@@ -91,6 +91,7 @@ public class Texte
    
    public static Map<String,Double> frequences(String contenu)
    {
+   	System.out.println("Génération des fréquences du message");
 		Map<String,Double> list = new HashMap<String,Double>();
        
        for (int i = 0; i < contenu.length(); i++)
@@ -132,5 +133,10 @@ public class Texte
        }
 
        return finalList;
+   }
+   
+   public String getTexte()
+   {
+   	return contenu;
    }
 }

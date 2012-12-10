@@ -10,14 +10,18 @@ public class Permutation {
 		String key = generate(alphabet);
 		System.out.println("key: " + key);
 		//String message = "I WOULD WALK FIVE HUNDRED MILES AND I WOULD WALK FIVE HUNDRED MORE";
-		String message = "IWOULDWALKFIVEHUNDREDMILESANDIWOULDWALKFIVEHUNDREDMORE";
-		System.out.println("message: " + message);
+		//String message = "IWOULDWALKFIVEHUNDREDMILESANDIWOULDWALKFIVEHUNDREDMORE";
+      Texte t = new Texte("texte.txt");
+      String message = t.getTexte();
+		
+		//System.out.println("message: " + message);
 		String cyphered = cypher(message, key, false);
-		System.out.println("cyphered: " + cyphered);
+		//System.out.println("cyphered: " + cyphered);
 		String clear = decipher(cyphered, key);
-		System.out.println("clear: " + clear);
-		String cracked = crack(cyphered);
-		System.out.println("cracked: "+cracked);
+		//System.out.println("clear: " + clear);
+		String correspondances = crack(cyphered);
+		System.out.println("cracked: "+correspondances);
+		//System.out.println(decipher(cyphered, correspondances));
 	}
 
 	public static String generate(String alphabet) {
@@ -61,7 +65,9 @@ public class Permutation {
 		return cyphered.toString();
 	}
 
-	public static String crack(String message) {
+	public static String crack(String message)
+	{
+		Integer[][] correspondances = new Integer[alphabet.length()][alphabet.length()];
 		//lettres restantes	
 		String restant = message;
 		//frequences dans le MESSAGE
@@ -93,10 +99,35 @@ public class Permutation {
 				}
 			}
 			
-			message = Permutation.replace(message,restant.charAt(0)+"",charTmp);
+			if (charTmp.length() == 1)
+			{
+				if (correspondances[charTmp.charAt(0)-65][restant.charAt(0)-65] == null)
+					correspondances[charTmp.charAt(0)-65][restant.charAt(0)-65] = 1;
+				else
+					correspondances[charTmp.charAt(0)-65][restant.charAt(0)-65]++;
+			}
 			restant = restant.substring(1);
 		}
-		return message;
+		
+		String key = "";
+		String max = "";
+		int max_nb = 0;
+		for (int i = 0; i < alphabet.length(); i++)
+		{
+			max = ".";
+			max_nb = 0;
+			for (int j = 0; j < alphabet.length(); j++)
+			{
+				if (correspondances[i][j] != null && correspondances[i][j] > max_nb)
+				{
+					max = alphabet.charAt(j)+"";
+					max_nb = correspondances[i][j];
+				}
+			}
+			key += max;
+		}
+		
+		return key;
 	}
 	
 	public static String replace(String message, String from, String to)
