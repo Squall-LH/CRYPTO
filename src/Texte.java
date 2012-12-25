@@ -163,7 +163,7 @@ public class Texte
    		   }
    	   }
    	   freq.put(String.valueOf(a), count);
-   	   //System.out.println("key: " + String.valueOf(a) + " freq: " + count);
+   	   System.out.println("key: " + String.valueOf(a) + " freq: " + count);
       }
       
       return freq;
