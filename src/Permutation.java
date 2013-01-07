@@ -4,26 +4,6 @@ import java.lang.Math;
 import java.util.HashMap;
 
 public class Permutation {
-	public static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-	public static void main(String[] args) {
-		String key = generate(alphabet);
-		System.out.println("key: " + key);
-		//String message = "I WOULD WALK FIVE HUNDRED MILES AND I WOULD WALK FIVE HUNDRED MORE";
-		//String message = "IWOULDWALKFIVEHUNDREDMILESANDIWOULDWALKFIVEHUNDREDMORE";
-      Texte t = new Texte("texte.txt");
-      String message = t.getTexte();
-		
-		//System.out.println("message: " + message);
-		String cyphered = cypher(message, key, false);
-		//System.out.println("cyphered: " + cyphered);
-		String clear = decipher(cyphered, key);
-		//System.out.println("clear: " + clear);
-		String correspondances = crack(cyphered);
-		System.out.println("cracked: "+correspondances);
-		//System.out.println(decipher(cyphered, correspondances));
-	}
-
 	public static String generate(String alphabet) {
 		char[] key = alphabet.toCharArray();
 		Random r = new Random();
@@ -65,7 +45,7 @@ public class Permutation {
 		return cyphered.toString();
 	}
 
-	public static String crack(String message)
+	public static String crack(String message, String alphabet)
 	{
 		Integer[][] correspondances = new Integer[alphabet.length()][alphabet.length()];
 		//lettres restantes	
@@ -73,7 +53,7 @@ public class Permutation {
 		//frequences dans le MESSAGE
 		Map<String,Double> freqMsg = Texte.frequences(message);
 		//frequences dans le CORPUS
-      Texte t = new Texte("texte.txt");
+      Texte t = new Texte("corpus.txt");
       Map<String,Double> freqCorpus = t.frequences();
 		//tant qu'il reste des lettres
 		while (restant.length() > 0)
@@ -114,7 +94,7 @@ public class Permutation {
 		int max_nb = 0;
 		for (int i = 0; i < alphabet.length(); i++)
 		{
-			max = ".";
+			max = "";
 			max_nb = 0;
 			for (int j = 0; j < alphabet.length(); j++)
 			{
@@ -126,6 +106,18 @@ public class Permutation {
 			}
 			key += max;
 		}
+		
+		/*
+		for (int i = 0; i < alphabet.length(); i++)
+		{
+			for (int j = 0; j < alphabet.length(); j++)
+			{
+				if (correspondances[i][j] != null)
+					System.out.print("["+i+","+j+"]"+correspondances[i][j]+" ");
+			}
+			System.out.println("");
+		}
+		*/
 		
 		return key;
 	}
