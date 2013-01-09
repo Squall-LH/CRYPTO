@@ -28,6 +28,7 @@ public class Texte
 			}
 		} catch (Exception e)
 		{
+			System.out.println("Erreur lors de l'ouverture du fichier");
 			contenu = "TEXTE DE REMPLACEMENT (ERREUR LORS DE L'OUVERTURE DU FICHIER)";
 		}
 		contenu = contenu.toUpperCase();
@@ -124,7 +125,7 @@ public class Texte
    		   }
    	   }
    	   freq.put(String.valueOf(a), count);
-   	   System.out.println("key: " + String.valueOf(a) + " freq: " + count);
+   	   //System.out.println("key: " + String.valueOf(a) + " freq: " + count);
       }
       
       return freq;
