@@ -14,16 +14,16 @@ public class Crypto {
 			System.out.println("__Permutation__");
 
 			// alphabet
-			System.out
-					.println("Veuillez saisir un alphabet\n('_' pour ABCDEFGHIJKLMNOPQRSTUVWXYZ) :");
+			System.out.println("Veuillez saisir un alphabet\n('_' pour ABCDEFGHIJKLMNOPQRSTUVWXYZ) :");
 			String alphabet = in.next();
-			alphabet = alphabet.equals("_") ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-					: alphabet;
+			alphabet = alphabet.equals("_") ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : alphabet;
 
 			// message
 			in = new Scanner(System.in);
-			System.out.println("Fichier texte à chiffrer :");
+			System.out.println("Fichier texte à chiffrer\n('_' pour texte.txt)\n('__' pour corpus.txt) :");
 			String fichier = in.next();
+			fichier = fichier.equals("_") ? "texte.txt" : fichier;
+			fichier = fichier.equals("__") ? "corpus.txt" : fichier;
 
 			Texte t = new Texte(fichier);
 
@@ -32,6 +32,13 @@ public class Crypto {
 			String cyphered = Permutation.cypher(t.getTexte(), key, false);
 			String cracked = Permutation.crack(cyphered, alphabet);
 			System.out.println("cracked: " + cracked);
+			
+			in = new Scanner(System.in);
+			System.out.println("Afficher le texte déchiffré ?\n1) Oui\n2) Non");
+			String afficher = in.next();
+			
+			if (afficher.equals("1"))
+				System.out.println(Permutation.decipher(cyphered,cracked));
 		} else if (chiffrement.equals("2")){
 			System.out.println("__Vigenère__ : Fonction de base.");
 			// message
