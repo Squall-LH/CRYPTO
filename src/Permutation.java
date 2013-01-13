@@ -107,7 +107,7 @@ public class Permutation {
 			{
 				for (int k = 0; k < charTmp.length(); k++)
 				{
-					int weight = 3/(k+1);
+					int weight = charTmp.length()*charTmp.length();
 					if (correspondances[charTmp.charAt(k)-65][restant.charAt(k)-65] == null)
 						correspondances[charTmp.charAt(k)-65][restant.charAt(k)-65] = weight;
 					else
@@ -136,18 +136,6 @@ public class Permutation {
 			}
 			key += max;
 		}
-		
-		/*
-		for (int i = 0; i < alphabet.length(); i++)
-		{
-			for (int j = 0; j < alphabet.length(); j++)
-			{
-				if (correspondances[i][j] != null)
-					System.out.print("["+i+","+j+"]"+correspondances[i][j]+" ");
-			}
-			System.out.println("");
-		}
-		*/
 		
 		return key;
 	}
