@@ -70,6 +70,7 @@ public class Vigenere {
 	}
 
 	public static String decipher(String message, String key) {
+		message = message.trim();
 		StringBuffer cyphered = new StringBuffer();
 		char[][] table = createTable(alphabet);
 		int i = 0;
@@ -79,7 +80,14 @@ public class Vigenere {
 				boolean found = false;
 				char k = 0;
 				while (!found) {
+					try{
 					found = table[k][key.charAt(j) - 65] == message.charAt(i);
+					} catch(Exception e) {
+						System.out.println("Erreur sur decipher avec le caractère: " + message.charAt(i));
+						System.out.println("k vaut: " + (int)k);
+						e.printStackTrace();
+						System.exit(1);
+					}
 					k++;
 				}
 				if (found) {
@@ -95,8 +103,12 @@ public class Vigenere {
 		return cyphered.toString();
 	}
 
-	public static String decipher(final String message) {
+	public static String decipher(String message) {
 		String deciphered = "";
+		
+		if(message.charAt(message.length()-1) == '\n') {
+			message = message.trim();
+		}
 
 		// On trouve l'indice de coïndcidence.
 		int keySize = guessKeySize(message);
