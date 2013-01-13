@@ -1,3 +1,6 @@
 CRYPTO
 ======
-flolep est passé par ici
+To build:
+ant
+To run:
+java -jar Crypto.jar

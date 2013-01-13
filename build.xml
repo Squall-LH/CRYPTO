@@ -10,7 +10,7 @@
     </target>
  
     <target name="jar" depends="compile">
-        <jar destfile="test.jar" manifest="build/MANIFEST.MF">
+        <jar destfile="Crypto.jar" manifest="build/MANIFEST.MF">
             <fileset dir="bin"/>
         </jar>
     </target>
