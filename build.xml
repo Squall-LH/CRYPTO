@@ -10,7 +10,7 @@
     </target>
  
     <target name="jar" depends="compile">
-        <jar destfile="Crypto.jar" manifest="build/MANIFEST.MF">
+        <jar destfile="Crypto.jar" manifest="MANIFEST.MF">
             <fileset dir="bin"/>
         </jar>
     </target>
@@ -23,7 +23,7 @@
     <target name="create" depends="clean">
         <mkdir dir="${output}"/>
     </target>
-    <manifest file="build/MANIFEST.MF">
+    <manifest file="MANIFEST.MF">
     <attribute name="Main-Class"
              value="Crypto" />
     </manifest>
